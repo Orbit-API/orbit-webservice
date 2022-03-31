@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -22,5 +23,9 @@ public class UsersService {
 
     public List<UserEntity> findAll() {
         return usersRepository.findAll();
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return usersRepository.findByEmail(email);
     }
 }

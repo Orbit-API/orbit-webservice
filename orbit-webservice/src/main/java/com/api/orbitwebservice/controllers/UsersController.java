@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -29,6 +30,12 @@ public class UsersController {
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO userDTO) {
+        Optional<UserEntity> emailAlreadyInUse = usersService.findByEmail(userDTO.getEmail());
+
+        if (!emailAlreadyInUse.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already in use");
+        }
+
         var userEntity = new UserEntity();
 
         BeanUtils.copyProperties(userDTO, userEntity);
