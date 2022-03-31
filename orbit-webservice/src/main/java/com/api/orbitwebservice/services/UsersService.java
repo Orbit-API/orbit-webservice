@@ -5,6 +5,7 @@ import com.api.orbitwebservice.repositories.UsersRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UsersService {
@@ -17,5 +18,9 @@ public class UsersService {
     @Transactional
     public UserEntity save(UserEntity userEntity) {
         return usersRepository.save(userEntity);
+    }
+
+    public List<UserEntity> findAll() {
+        return usersRepository.findAll();
     }
 }

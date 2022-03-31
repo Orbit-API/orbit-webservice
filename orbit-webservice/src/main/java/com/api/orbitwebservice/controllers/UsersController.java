@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,5 +38,10 @@ public class UsersController {
         userEntity.setUpdated_at(LocalDateTime.now(ZoneId.of("UTC")));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usersService.save(userEntity));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(usersService.findAll());
     }
 }
