@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -29,12 +30,18 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO userDTO) {
-        Optional<UserEntity> emailAlreadyInUse = usersService.findByEmail(userDTO.getEmail());
+    public ResponseEntity<Object> saveUser(@RequestParam Map<String, String> body) {
+//        Optional<UserEntity> emailAlreadyInUse = usersService.findByEmail(userDTO.getEmail());
 
-        if (!emailAlreadyInUse.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already in use");
-        }
+        UserDTO userDTO = new UserDTO(
+                body.get("name"),
+                body.get("email"),
+                body.get("password"),
+                body.get("phone"));
+
+//        if (!emailAlreadyInUse.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already in use");
+//        }
 
         var userEntity = new UserEntity();
 
