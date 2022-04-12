@@ -19,7 +19,7 @@ git checkout develop
 - Instale as dependências:
 
 ```bash
-cd orbit-service
+cd orbit-webservice
 
 mvn install
 ```
