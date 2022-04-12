@@ -20,7 +20,17 @@ git checkout develop
 
 ```bash
 cd orbit-webservice
+```
 
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install maven
+```
+
+```bash
 mvn install
 ```
 
