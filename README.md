@@ -70,11 +70,7 @@ management.endpoints.web.exposure.include=*
 management.endpoints.health.show-details=always
 ```
 
-- ✅ Para iniciar a aplicação:
-
-```bash
-cd ../java/com/api/orbitwebservice
-```
+- ✅ Para iniciar a aplicação, retorne para pasta 📁 *orbitwebservice* e execute:
 
 ```bash
 mvn spring-boot:run
