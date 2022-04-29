@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +31,8 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestParam Map<String, String> body) {
+    public ResponseEntity<Object> saveUser(@RequestBody Map<String, String> body) {
+        Long startTime = new Date().getTime();
 //        Optional<UserEntity> emailAlreadyInUse = usersService.findByEmail(userDTO.getEmail());
 
         UserDTO userDTO = new UserDTO(
@@ -51,7 +53,9 @@ public class UsersController {
         userEntity.setCreated_at(LocalDateTime.now(ZoneId.of("UTC")));
         userEntity.setUpdated_at(LocalDateTime.now(ZoneId.of("UTC")));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(usersService.save(userEntity));
+        this.usersService.save(userEntity);
+        userEntity.setCreationTimeMili(new Date().getTime() - startTime);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userEntity);
     }
 
     @GetMapping

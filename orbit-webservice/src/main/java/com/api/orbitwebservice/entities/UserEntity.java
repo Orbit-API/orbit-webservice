@@ -19,7 +19,6 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -31,6 +30,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private LocalDateTime updated_at;
+
+    @Transient
+    private Long creationTimeMili;
 
     public UUID getId() {
         return id;
@@ -86,5 +88,13 @@ public class UserEntity {
 
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public Long getCreationTimeMili() {
+        return creationTimeMili;
+    }
+
+    public void setCreationTimeMili(Long creationTimeMili) {
+        this.creationTimeMili = creationTimeMili;
     }
 }
