@@ -2,6 +2,8 @@ package com.api.orbitwebservice.services;
 
 import com.api.orbitwebservice.entities.UserEntity;
 import com.api.orbitwebservice.repositories.UsersRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,8 +23,8 @@ public class UsersService {
         return usersRepository.save(userEntity);
     }
 
-    public List<UserEntity> findAll() {
-        return usersRepository.findAll();
+    public Page<UserEntity> findAll(Pageable pageable) {
+        return usersRepository.findAll(pageable);
     }
 
     public Optional<UserEntity> findByEmail(String email) {
