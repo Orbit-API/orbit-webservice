@@ -4,6 +4,8 @@ import com.api.orbitwebservice.dtos.UserDTO;
 import com.api.orbitwebservice.entities.UserEntity;
 import com.api.orbitwebservice.services.UsersService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,7 +61,7 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(usersService.findAll());
+    public ResponseEntity<Page<UserEntity>> getAllUsers(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(usersService.findAll(pageable));
     }
 }
