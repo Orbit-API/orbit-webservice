@@ -25,39 +25,23 @@ import java.util.Optional;
 public class UsersController {
     private final UsersService usersService;
 
-    private final PasswordEncoder encoder;
-
     public UsersController(UsersService usersService, PasswordEncoder encoder) {
         this.usersService = usersService;
-        this.encoder = encoder;
     }
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody Map<String, String> body) {
-        Long startTime = new Date().getTime();
-//        Optional<UserEntity> emailAlreadyInUse = usersService.findByEmail(userDTO.getEmail());
-
         UserDTO userDTO = new UserDTO(
                 body.get("name"),
                 body.get("email"),
                 body.get("password"),
                 body.get("phone"));
-
-//        if (!emailAlreadyInUse.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already in use");
-//        }
-
-        var userEntity = new UserEntity();
-
-        BeanUtils.copyProperties(userDTO, userEntity);
-
-        userEntity.setPassword(encoder.encode(userEntity.getPassword()));
-        userEntity.setCreated_at(LocalDateTime.now(ZoneId.of("UTC")));
-        userEntity.setUpdated_at(LocalDateTime.now(ZoneId.of("UTC")));
-
-        this.usersService.save(userEntity);
-        userEntity.setCreationTimeMili(new Date().getTime() - startTime);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userEntity);
+        try {
+            UserEntity user = this.usersService.save(userDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.toString());
+        }
     }
 
     @GetMapping
